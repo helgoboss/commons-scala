@@ -2,6 +2,12 @@
 
     <modelVersion>4.0.0</modelVersion>
     
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+    
     <groupId>org.helgoboss</groupId>
     <artifactId>commons-scala</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -14,9 +20,9 @@
     <url>
     http://code.google.com/p/helgoboss-commons/wiki/HelgobossScalaCommons</url>
     <scm>
-        <url>TODO</url>
-        <connection>TODO</connection>
-        <developerConnection>TODO</developerConnection>
+        <url>https://github.com/helgoboss/commons-scala</url>
+        <connection>scm:git:https://github.com/helgoboss/commons-scala</connection>
+        <developerConnection>scm:git:https://github.com/helgoboss/commons-scala</developerConnection>
     </scm>
     <licenses>
         <license>
@@ -64,30 +70,6 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>2.1.2</version>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
-            </plugin>
-            <plugin>
-                <groupId>com.mycila.maven-license-plugin</groupId>
-                <artifactId>maven-license-plugin</artifactId>
-                <version>1.9.0</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.11</version>
                 <configuration>
@@ -95,6 +77,12 @@
                         <include>**/*Spec.class</include>
                     </includes>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.3.6</version>
+                <extensions>true</extensions>
             </plugin>
             <plugin>
                 <groupId>org.scala-tools</groupId>
@@ -113,38 +101,53 @@
                             <goal>testCompile</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>scaladoc</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>doc</goal>
-                        </goals>
-                    </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
-                <executions>
-                    <execution>
-                        <id>scaladoc-jar</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/site/scaladocs</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.3.6</version>
-                <extensions>true</extensions>
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>sonatype-oss-release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.scala-tools</groupId>
+                        <artifactId>maven-scala-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>scaladoc</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>doc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/site/scaladocs</outputDirectory>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.mycila.maven-license-plugin</groupId>
+                        <artifactId>maven-license-plugin</artifactId>
+                        <version>1.9.0</version>
+                        <configuration>
+                            <header>LICENSE</header>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>format</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
