@@ -17,8 +17,7 @@
         including very reusable classes for using Ant-style path expressions.
     </description>
     <packaging>bundle</packaging>
-    <url>
-    http://code.google.com/p/helgoboss-commons/wiki/HelgobossScalaCommons</url>
+    <url>https://github.com/helgoboss/commons-scala</url>
     <scm>
         <url>https://github.com/helgoboss/commons-scala</url>
         <connection>scm:git:https://github.com/helgoboss/commons-scala</connection>
